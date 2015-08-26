@@ -4,5 +4,7 @@ Homestead.yaml
 Homestead.json
 .env
 
+/public
+
 .vagrant
 node_modules
