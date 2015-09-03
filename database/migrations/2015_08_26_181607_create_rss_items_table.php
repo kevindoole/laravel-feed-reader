@@ -16,16 +16,10 @@ class CreateRssItemsTable extends Migration
             $table->increments('id');
             $table->timestamps();
             $table->string('title');
-            $table->text('description');
             $table->string('link');
             $table->string('author');
-            $table->string('category');
-            $table->string('comments');
-            $table->string('guid');
-            $table->string('pub_date');
-            $table->string('source');
-            $table->string('media_type');
-            $table->string('media_path');
+            $table->string('categories');
+            $table->datetime('pub_date');
         });
     }
 

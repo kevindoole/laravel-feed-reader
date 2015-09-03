@@ -23,15 +23,9 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 $factory->define(App\RssItem::class, function (Faker\Generator $faker) {
     return [
         'title' => $faker->realText($maxNbChars = 150),
-        'description' => $faker->realText($maxNbChars = 400),
         'link' => $faker->url,
         'author' => $faker->name,
-        'category' => $faker->word,
-        'comments' => $faker->url,
-        'guid' => $faker->uuid,
+        'categories' => $faker->word,
         'pub_date' => $faker->date,
-        'source' => $faker->url,
-        'media_type' => $faker->mimeType,
-        'media_path' => $faker->imageUrl,
     ];
 });

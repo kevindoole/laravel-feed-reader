@@ -18,7 +18,7 @@
 						<div class="media">
 							<img class="img thumb" src="{{ $item->media_path }}" alt="">
 							<div class="bd">
-								<p>{{ $item->description }}</p>
+								<p>{!! $item->description !!}</p>
 							</div>
 						</div>
 					</article>
