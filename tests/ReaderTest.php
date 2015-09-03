@@ -6,14 +6,11 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class ReaderTest extends TestCase
 {
-    /**
-     * Tests the ReaderController.
-     *
-     * @return void
-     */
+    use DatabaseMigrations;
+
     public function testItShowsTenStories()
     {
-        $items = \App\RssItem::limit(11)->get()->toArray();
+        $items = factory(App\RssItem::class, 15)->create();
         $this->visit('/')
              ->see($items[0]['title'])
              ->see($items[9]['title'])
@@ -22,13 +19,14 @@ class ReaderTest extends TestCase
 
     public function testItPaginates()
     {
+        $items = factory(App\RssItem::class, 15)->create();
         $this->visit('/')
              ->see('<a href="http://localhost/?page=2">2</a>');
     }
 
     public function testPageTwoLoadsCorrectItems()
     {
-        $items = \App\RssItem::limit(21)->get()->toArray();
+        $items = factory(App\RssItem::class, 25)->create();
         $this->visit('?page=2')
              ->dontsee($items[0]['title'])
              ->dontsee($items[9]['title'])
