@@ -6,7 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class RssItem extends Model
 {
-    protected $fillable = ['title', 'description', 'link', 'author', 'guid', 'pub_date', 'source', 'media_type', 'media_path'];
+    protected $fillable = ['title', 'link', 'author', 'categories', 'pub_date',];
+
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = ['created_at', 'updated_at', 'pub_date'];
 
     public static function fromSimplePie($items)
     {
@@ -16,9 +23,12 @@ class RssItem extends Model
                 'link' => $item->get_link(),
                 'author' => $item->get_author(),
                 'categories' => simple_pie_categories_to_string($item->get_categories()),
-                'pub_date' => $item->get_date(),
+                'pub_date' => $item->get_date('U'),
             ];
         }, $items);
-        static::insert($items);
+
+        foreach ($items as $item) {
+            static::create($item);
+        }
     }
 }

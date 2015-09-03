@@ -31,7 +31,6 @@ class LoaderTest extends TestCase
             'link' => $sampleItem->get_link(),
             'author' => $sampleItem->get_author(),
             'categories' => 'China, Japan, Second world war, Asia Pacific, World news, Vladimir Putin',
-            // 'pub_date' => $sampleItem->get_date(),
         ]);
     }
 }

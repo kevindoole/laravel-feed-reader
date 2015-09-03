@@ -17,8 +17,8 @@ class CreateRssItemsTable extends Migration
             $table->timestamps();
             $table->string('title');
             $table->string('link');
-            $table->string('author');
-            $table->string('categories');
+            $table->string('author')->nullable();
+            $table->string('categories')->nullable();
             $table->datetime('pub_date');
         });
     }

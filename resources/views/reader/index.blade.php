@@ -15,12 +15,9 @@
 				<li>
 					<article class="item">
 						<h1>{{ $item->title }}</h1>
-						<div class="media">
-							<img class="img thumb" src="{{ $item->media_path }}" alt="">
-							<div class="bd">
-								<p>{!! $item->description !!}</p>
-							</div>
-						</div>
+						<p>{{ $item->author }}</p>
+						<p>{{ $item->categories }}</p>
+						<p>{{ $item->pub_date->format('g:ia, M j, Y') }}</p>
 					</article>
 				</li>
 			@endforeach
