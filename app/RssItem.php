@@ -21,7 +21,7 @@ class RssItem extends Model
             return [
                 'title' => $item->get_title(),
                 'link' => $item->get_link(),
-                'author' => $item->get_author(),
+                'author' => simple_pie_authors_to_string($item->get_authors()),
                 'categories' => simple_pie_categories_to_string($item->get_categories()),
                 'pub_date' => $item->get_date('U'),
             ];
