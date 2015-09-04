@@ -2,15 +2,25 @@
 
 function simple_pie_categories_to_string($categories)
 {
-    if (! is_array($categories)) {
+    return sp_implode_attributes('category', $categories);
+}
+
+function simple_pie_authors_to_string($authors)
+{
+    return sp_implode_attributes('author', $authors);
+}
+
+function sp_implode_attributes($attributeName, $list)
+{
+    if (! is_array($list)) {
         return '';
     }
 
-    $categories = array_map(function ($cat) {
-        return $cat->get_term();
-    }, $categories);
+    $list = array_map(function ($attr) use ($attributeName) {
+        return 'author' === $attributeName ? $attr->get_name() : $attr->get_term();
+    }, $list);
 
-    $categories = implode(', ', $categories);
+    $list = implode(', ', $list);
 
-    return $categories;
+    return $list;
 }
