@@ -13,12 +13,31 @@
 		<ul>
 			@foreach($items as $item)
 				<li>
-					<article class="item">
-						<h1>{{ $item->title }}</h1>
-						<p>{{ $item->author }}</p>
-						<p>{{ $item->categories }}</p>
-						<p>{{ $item->pub_date->format('g:ia, M j, Y') }}</p>
-					</article>
+					<a href="{{ $item->link }}">
+						<article class="item">
+
+							<div class="date">
+								{{ $item->pub_date->format('g:ia, M j, Y') }}
+							</div>
+
+							<h1>
+								{{ $item->title }}
+							</h1>
+
+							@if( ! empty($item->author) )
+							<p>
+								<i>by</i> {{ $item->author }}
+							</p>
+							@endif
+
+							@if( ! empty($item->categories) )
+							<p>
+								Published in: {{ $item->categories }}
+							</p>
+							@endif
+
+						</article>
+					</a>
 				</li>
 			@endforeach
 		</ul>
