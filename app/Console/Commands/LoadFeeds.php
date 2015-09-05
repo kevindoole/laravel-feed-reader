@@ -40,7 +40,6 @@ class LoadFeeds extends Command
      */
     public function handle()
     {
-        date_default_timezone_set('America/Winnipeg');
         $url = $this->argument('feed_url');
         $feed = FeedReader::read($url);
         if ($feed->error()) {
