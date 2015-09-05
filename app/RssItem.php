@@ -31,4 +31,9 @@ class RssItem extends Model
             static::create($item);
         }
     }
+
+    public function source()
+    {
+        return parse_url($this->link, PHP_URL_HOST);
+    }
 }

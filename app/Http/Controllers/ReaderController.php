@@ -16,7 +16,7 @@ class ReaderController extends Controller
 
     public function index()
     {
-        $items = RssItem::paginate($this->items_per_page);
+        $items = RssItem::orderby('pub_date', 'desc')->paginate($this->items_per_page);
         return view('reader.index', compact('items'));
     }
 }

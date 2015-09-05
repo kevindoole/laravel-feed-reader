@@ -14,8 +14,9 @@
 					<a class="item-link" href="{{ $item->link }}">
 						<article class="item">
 
-							<p class="date">
-								{{ $item->pub_date->diffForHumans() }}
+							<p>
+								{{ $item->pub_date->diffForHumans() }} |
+								<span class="source">{{ $item->source() }}</span>
 							</p>
 
 							<h1>

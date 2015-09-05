@@ -40,8 +40,10 @@ class LoadFeeds extends Command
      */
     public function handle()
     {
-        $url = $this->argument('feed_url');
-        $feed = FeedReader::read($url);
+        $urls = explode(',', $this->argument('feed_url'));
+        $urls = array_map('trim', $urls);
+
+        $feed = FeedReader::read($urls);
         if ($feed->error()) {
             $this->error($feed->error());
             return 2;
