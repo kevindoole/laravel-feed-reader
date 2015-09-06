@@ -11,33 +11,30 @@
 		<header class="brand">
 			<h1>Gurgitator</h1>
 		</header>
-		<ul>
-			@foreach($items as $item)
-				<li>
-					<a class="item-link" href="{{ $item->link }}">
-						<article class="item">
+		<ul id="work">
+			<li v-repeat="item: items">
+				<a class="item-link" href="@{{item.link}}">
+					<article class="item">
+						<p>
+							@{{item.date}} | <span class="source">@{{item.source}}</span>
+						</p>
 
-							<p>
-								{{ $item->pub_date->diffForHumans() }} |
-								<span class="source">{{ $item->source() }}</span>
-							</p>
+						<h1>
+							@{{item.title}}
+						</h1>
 
-							<h1>
-								{{ $item->title }}
-							</h1>
+						<p v-if="$item.categories" class="type">
+							<i>Categories:</i> @{{item.categories}}
+						</p>
 
-							@if( ! empty($item->categories) )
-							<p class="type">
-								<i>Categories:</i> {{ $item->categories }}
-							</p>
-							@endif
-
-						</article>
-					</a>
-				</li>
-			@endforeach
+					</article>
+				</a>
+			</li>
 		</ul>
 		{!! $items->render() !!}
 	</div>
+
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/vue/0.12.12/vue.min.js"></script>
+	<script src="/js/app.js"></script>
 </body>
 </html>

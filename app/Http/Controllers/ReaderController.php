@@ -19,4 +19,23 @@ class ReaderController extends Controller
         $items = RssItem::orderby('pub_date', 'desc')->paginate($this->items_per_page);
         return view('reader.index', compact('items'));
     }
+
+    public function jsonFeed()
+    {
+        $items = RssItem::orderby('pub_date', 'desc')->paginate($this->items_per_page);
+
+        $json_data = [];
+
+        foreach ($items as $item) {
+            $json_data[] = [
+                'date' => $item->pub_date->diffForHumans(),
+                'source' => $item->source(),
+                'title' => $item->title,
+                'categories' => $item->categories,
+                'link' => $item->link,
+            ];
+        }
+
+        return json_encode($json_data);
+    }
 }

@@ -12,3 +12,4 @@
 */
 
 Route::get('/', 'ReaderController@index');
+Route::get('/items.json', 'ReaderController@jsonFeed');
