@@ -8,6 +8,9 @@
 </head>
 <body>
 	<div class="wrapper">
+		<header class="brand">
+			<h1>Gurgitator</h1>
+		</header>
 		<ul>
 			@foreach($items as $item)
 				<li>

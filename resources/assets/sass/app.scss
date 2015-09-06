@@ -10,6 +10,19 @@
 	max-width: 829px;
 }
 
+.brand {
+	padding: $small-spacing;
+	margin-bottom: $base-spacing;
+	background-color: $brand-color;
+	text-align: center;
+
+	h1 {
+		margin: 0;
+		font-size: $base-font-size * 2;
+		color: white;
+	}
+}
+
 
 .pagination {
 	@include clearfix;
