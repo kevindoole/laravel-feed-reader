@@ -15,6 +15,26 @@ class RssItem extends Model
      */
     protected $dates = ['created_at', 'updated_at', 'pub_date'];
 
+    public function scopePagedJson($query, $perPage)
+    {
+        $items = $query->orderby('pub_date', 'desc')->paginate($perPage);
+
+        $json_data = $items->toArray();
+        unset($json_data['data']);
+
+        foreach ($items as $item) {
+            $json_data['items'][] = [
+                'date' => $item->pub_date->diffForHumans(),
+                'source' => $item->source(),
+                'title' => $item->title,
+                'categories' => $item->categories,
+                'link' => $item->link,
+            ];
+        }
+
+        return $json_data;
+    }
+
     public static function fromSimplePie($items)
     {
         $items = array_map(function ($item) {
@@ -37,5 +57,10 @@ class RssItem extends Model
     public function source()
     {
         return parse_url($this->link, PHP_URL_HOST);
+    }
+
+    public function getTitleAttribute($title)
+    {
+        return html_entity_decode($title);
     }
 }

@@ -21,11 +21,12 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 });
 
 $factory->define(App\RssItem::class, function (Faker\Generator $faker) {
+    $url = $faker->url;
     return [
         'title' => $faker->realText($maxNbChars = 150),
-        'link' => $faker->url,
-        'author' => $faker->name,
+        'link' => $url,
         'categories' => $faker->word,
         'pub_date' => $faker->date,
+        'guid' => $url,
     ];
 });

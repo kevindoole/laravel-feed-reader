@@ -6,32 +6,34 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class ReaderTest extends TestCase
 {
-    use DatabaseMigrations;
+    use DatabaseMigrations, DatabaseTransactions;
 
     public function testItShowsTenStories()
     {
-        $items = factory(App\RssItem::class, 15)->create();
-        $this->visit('/')
-             ->see($items[0]['title'])
-             ->see($items[9]['title'])
-             ->dontsee($items[10]['title']);
+        factory(App\RssItem::class, 15)->create();
+        $items = \App\RssItem::pagedJson(15);
+        $this->visit('items.json')
+             ->seeJson($items['items'][0])
+             ->seeJson($items['items'][9])
+             ->dontseeJson($items['items'][10]);
     }
 
     public function testItPaginates()
     {
         $items = factory(App\RssItem::class, 15)->create();
-        $this->visit('/')
-             ->see('<a href="http://localhost/?page=2">2</a>');
+        $this->visit('items.json')
+             ->seeJson(['next_page_url' => 'http://localhost/items.json/?page=2']);
     }
 
     public function testPageTwoLoadsCorrectItems()
     {
-        $items = factory(App\RssItem::class, 25)->create();
-        $this->visit('?page=2')
-             ->dontsee($items[0]['title'])
-             ->dontsee($items[9]['title'])
-             ->see($items[10]['title'])
-             ->see($items[19]['title'])
-             ->dontsee($items[20]['title']);
+        factory(App\RssItem::class, 25)->create();
+        $items = \App\RssItem::pagedJson(25);
+        $this->visit('items.json/?page=2')
+             ->dontseeJson($items['items'][0])
+             ->dontseeJson($items['items'][9])
+             ->seeJson($items['items'][10])
+             ->seeJson($items['items'][19])
+             ->dontseeJson($items['items'][20]);
     }
 }

@@ -16,26 +16,13 @@ class ReaderController extends Controller
 
     public function index()
     {
-        $items = RssItem::orderby('pub_date', 'desc')->paginate($this->items_per_page);
-        return view('reader.index', compact('items'));
+        return view('reader.index');
     }
 
     public function jsonFeed()
     {
-        $items = RssItem::orderby('pub_date', 'desc')->paginate($this->items_per_page);
+        $data = RssItem::pagedJson($this->items_per_page);
 
-        $json_data = [];
-
-        foreach ($items as $item) {
-            $json_data[] = [
-                'date' => $item->pub_date->diffForHumans(),
-                'source' => $item->source(),
-                'title' => $item->title,
-                'categories' => $item->categories,
-                'link' => $item->link,
-            ];
-        }
-
-        return json_encode($json_data);
+        return json_encode($data);
     }
 }
