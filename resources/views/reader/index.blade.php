@@ -20,39 +20,13 @@
 					v-repeat="item: items"
 					track-by="id"
 					parent-show-item="@{{onShowItem}}"
-					inline-template
 					v-transition="expand"
-				>
-					<li>
-						<a
-							v-on="click: showItem($index, $event)"
-							class="item-link"
-							v-class="active: item.active, visited: item.viewed"
-							href="@{{item.link}}"
-						>
-							<article class="item">
-								<p>
-									@{{item.date}} | <span class="source">@{{item.source}}</span>
-								</p>
-
-								<h1>
-									@{{item.title}}
-								</h1>
-
-								<p v-if="$item.categories" class="type">
-									<i>Categories:</i> @{{item.categories}}
-								</p>
-
-								<button v-on="click: deleteItem($event)" class="delete">Delete</button>
-							</article>
-						</a>
-					</li>
-				</item>
+				></item>
 			</ul>
 			<div class="pagination">
-				<a v-on="click: changePage" v-if="prevPage" href="@{{prevPage}}">Previous page</a>
+				<a class="prev" v-on="click: changePage" v-if="prevPage" href="@{{prevPage}}">Previous page</a>
 				Showing @{{from}} to @{{to}} of @{{total}}
-				<a v-on="click: changePage" href="@{{nextPage}}">Next page</a>
+				<a class="next" v-on="click: changePage" v-if="nextPage" href="@{{nextPage}}">Next page</a>
 			</div>
 			<div v-if="showing" class="offsite-content">
 				<header>
@@ -63,6 +37,32 @@
 		</div>
 	</div>
 
+	<script type="text/x-template" id="item-template">
+		<li>
+			<a
+				v-on="click: showItem($index, $event)"
+				class="item-link"
+				v-class="active: item.active, visited: item.viewed"
+				href="@{{item.link}}"
+			>
+				<article class="item">
+					<p>
+						@{{item.date}} | <span class="source">@{{item.source}}</span>
+					</p>
+
+					<h1>
+						@{{item.title}}
+					</h1>
+
+					<p v-if="$item.categories" class="type">
+						<i>Categories:</i> @{{item.categories}}
+					</p>
+
+					<button v-on="click: deleteItem($event)" class="delete">Delete</button>
+				</article>
+			</a>
+		</li>
+	</script>
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/vue/0.12.12/vue.min.js"></script>
 	<script src="/js/app.js"></script>
 </body>
