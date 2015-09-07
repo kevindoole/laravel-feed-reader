@@ -15,7 +15,7 @@ class ReaderTest extends TestCase
         $this->visit('items.json')
              ->seeJson($items['items'][0])
              ->seeJson($items['items'][9])
-             ->dontseeJson($items['items'][10]);
+             ->dontseeJson(['title' => $items['items'][10]]);
     }
 
     public function testItPaginates()
@@ -30,10 +30,10 @@ class ReaderTest extends TestCase
         factory(App\RssItem::class, 25)->create();
         $items = \App\RssItem::pagedJson(25);
         $this->visit('items.json/?page=2')
-             ->dontseeJson($items['items'][0])
-             ->dontseeJson($items['items'][9])
+             ->dontseeJson(['title' => $items['items'][0]])
+             ->dontseeJson(['title' => $items['items'][9]])
              ->seeJson($items['items'][10])
              ->seeJson($items['items'][19])
-             ->dontseeJson($items['items'][20]);
+             ->dontseeJson(['title' => $items['items'][20]]);
     }
 }
