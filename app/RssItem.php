@@ -15,6 +15,12 @@ class RssItem extends Model
      */
     protected $dates = ['created_at', 'updated_at', 'pub_date'];
 
+    /**
+     * Format a collection of items for our Vue viewmodel.
+     * @param  Builder $query
+     * @param  int     $perPage Number of items to show per page
+     * @return array   Ready for JSON array of item data
+     */
     public function scopePagedJson($query, $perPage)
     {
         $items = $query->orderby('pub_date', 'desc')->paginate($perPage);
@@ -37,6 +43,14 @@ class RssItem extends Model
         return $json_data;
     }
 
+    /**
+     * The model can create a list of records from a Simplepie_Items array.
+     *
+     * Items with previously persisted guids are skipped.
+     *
+     * @param  array $items An array of SimplePie_Item references
+     * @return array        The count of loaded and skipped items
+     */
     public static function fromSimplePie($items)
     {
         $loaded = 0;
@@ -65,11 +79,20 @@ class RssItem extends Model
         return compact('loaded', 'skipped');
     }
 
+    /**
+     * Show the source of the article, based on the domain in the item link.
+     * @return string The domain in the link attribute
+     */
     public function source()
     {
         return parse_url($this->link, PHP_URL_HOST);
     }
 
+    /**
+     * Encode entities before showing an item title.
+     * @param  string $title The title pulled from RSS
+     * @return string        The title with encoded entities
+     */
     public function getTitleAttribute($title)
     {
         return html_entity_decode($title);

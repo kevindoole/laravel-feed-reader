@@ -49,6 +49,7 @@ class LoadFeeds extends Command
             return 2;
         }
         $items = $feed->get_items();
+
         $this->comment('Found ' . count($items) . ' items...');
 
         $result = RssItem::fromSimplePie($items);

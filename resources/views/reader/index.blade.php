@@ -40,7 +40,7 @@
 	<script type="text/x-template" id="item-template">
 		<li>
 			<a
-				v-on="click: showItem($index, $event)"
+				v-on="click: showItem($event)"
 				class="item-link"
 				v-class="active: item.active, visited: item.viewed"
 				href="@{{item.link}}"
