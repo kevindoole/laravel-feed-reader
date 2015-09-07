@@ -1,27 +1,51 @@
-## Laravel PHP Framework
+## Laravel + Vue Feed Gurgitator
+This package lets you load in some data from various RSS feeds of your choosing
+in order to display them in your browser, for a smooth and elegant reading
+experience.
 
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
-[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
+### Installation
+Make sure you have VirtualBox and Vagrant installed so that you can run the
+package as a virtual environment on your computer.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, queueing, and caching.
+- [Install VirtualBox](https://www.virtualbox.org/wiki/Downloads)
+- [Install Vagrant](https://www.vagrantup.com/downloads.html)
+- Install Vagrant::Hostsupdater:
+`$ vagrant plugin install vagrant-hostsupdater`
 
-Laravel is accessible, yet powerful, providing powerful tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+Once the VM stuff is installed, clone this repo and set it up:
+```bash
+$ git clone git@github.com:kevindoole/laravel-feed-reader.git
+$ cd laravel-feed-reader
+```
 
-## Official Documentation
+Install dependencies and set up the virtual machine:
+```bash
+$ composer install
+$ php vendor/bin/homestead make # configure the VM environment
+$ # vendor\bin\homestead make on windows
+```
 
-Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
+Install and boot the VM -- this might take a few minutes...
+```bash
+$ vagrant up
+```
+<small>This will set up your hosts file for you. On Mac, the terminal will ask you
+for your password, but on Windows, you'll need to run your console with
+administrator privileges so that it can edit your hosts file.</small>
 
-## Contributing
+At this point, you're pretty much there. Just need to log into the new VM and
+load some feeds. And then read them.
+```bash
+$ vagrant ssh
+$ cd /vagrant
+$ mv .env.example .env # sets up some Laravel environment variables for you
+$ php artisan migrate # set up the database
+$ php artisan key:generate # set the application key
+$ php artisan feeds:load http://your-fave-feed1.com/rss,
+  http://your-fave-feed2.com/rss, etc
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
-
-### License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+That last command loads all your feeds. Once it finishes, jump over to your
+your favourite browser (which I hope is the latest version of Chrome, because
+that's everywhere I've tested this thing) and visit http://laravel-feed-reader/, which
+*should* be pointing you to your new VM.
