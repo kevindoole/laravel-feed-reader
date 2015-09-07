@@ -37,6 +37,10 @@ class RssItem extends Model
 
     public static function fromSimplePie($items)
     {
+        $loaded = 0;
+        $skipped = 0;
+
+
         $items = array_map(function ($item) {
             return [
                 'title' => $item->get_title(),
@@ -50,8 +54,13 @@ class RssItem extends Model
         foreach ($items as $item) {
             if (0 === static::where('guid', $item['guid'])->count()) {
                 static::create($item);
+                $loaded++;
+            } else {
+                $skipped++;
             }
         }
+
+        return compact('loaded', 'skipped');
     }
 
     public function source()

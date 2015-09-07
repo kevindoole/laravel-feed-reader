@@ -49,7 +49,13 @@ class LoadFeeds extends Command
             return 2;
         }
         $items = $feed->get_items();
-        RssItem::fromSimplePie($items);
+        $this->comment('Found ' . count($items) . ' items...');
+
+        $result = RssItem::fromSimplePie($items);
+
+        $this->comment('Skipped ' . $result['skipped'] . ' previously loaded items...');
+        $this->info('Loaded ' . $result['loaded'] . ' new items.');
+
         return 1;
     }
 }
