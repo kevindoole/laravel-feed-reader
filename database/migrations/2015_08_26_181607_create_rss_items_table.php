@@ -21,6 +21,7 @@ class CreateRssItemsTable extends Migration
             $table->datetime('pub_date');
             $table->string('guid');
             $table->boolean('viewed');
+            $table->softDeletes();
         });
     }
 

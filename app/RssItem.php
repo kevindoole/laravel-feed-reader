@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class RssItem extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = ['title', 'link', 'author', 'categories', 'pub_date', 'guid'];
 
     /**
@@ -13,7 +16,7 @@ class RssItem extends Model
      *
      * @var array
      */
-    protected $dates = ['created_at', 'updated_at', 'pub_date'];
+    protected $dates = ['created_at', 'updated_at', 'pub_date', 'deleted_at'];
 
     /**
      * Format a collection of items for our Vue viewmodel.
@@ -68,7 +71,7 @@ class RssItem extends Model
         }, $items);
 
         foreach ($items as $item) {
-            if (0 === static::where('guid', $item['guid'])->count()) {
+            if (0 === static::withTrashed()->where('guid', $item['guid'])->count()) {
                 static::create($item);
                 $loaded++;
             } else {
