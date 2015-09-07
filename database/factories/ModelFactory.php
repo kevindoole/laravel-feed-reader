@@ -28,5 +28,6 @@ $factory->define(App\RssItem::class, function (Faker\Generator $faker) {
         'categories' => $faker->word,
         'pub_date' => $faker->date,
         'guid' => $url,
+        'viewed' => $faker->boolean,
     ];
 });

@@ -1,6 +1,7 @@
 a.item-link {
+  position: relative;
   display: block;
-  padding: ($base-spacing / 2) $base-spacing ($base-spacing / 1.5);
+  padding: ($base-spacing / 2) ($base-spacing * 3) ($base-spacing / 1.5) $base-spacing;
   margin-bottom: $base-spacing;
   background-color: $near-white;
   border: 1px solid darken($near-white, 5%);
@@ -22,11 +23,36 @@ a.item-link {
     font-style: italic;
   }
 
-  &:visited h1 {
+  &:visited h1, &.visited h1 {
     color: $medium-gray;
   }
 
   &:hover, &:focus {
     background-color: lighten($action-color, 40%);
   }
+
+  &.active {
+    border: 1px solid $brand-color;
+  }
+
+  .delete {
+    position: absolute;
+    right: $small-spacing;
+    top: $small-spacing;
+    background: none;
+    border: 1px solid $medium-gray;
+    color: $medium-gray;
+    font-size: 12px;
+
+    &:hover, &:focus {
+      background-color: $light-gray;
+    }
+  }
+}
+
+.expand-transition {
+  transition: opacity .3s ease;
+}
+.expand-enter, .expand-leave {
+  opacity: 0;
 }

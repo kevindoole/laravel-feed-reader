@@ -13,3 +13,5 @@
 
 Route::get('/', 'ReaderController@index');
 Route::get('/items.json', 'ReaderController@jsonFeed');
+Route::post('/items/delete', 'ReaderController@deleteItem');
+Route::post('/items/viewed', 'ReaderController@viewedItem');

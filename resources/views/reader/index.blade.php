@@ -5,6 +5,9 @@
 	<meta charset="UTF-8">
 	<title>Reader</title>
 	<link rel="stylesheet" href="/css/app.css">
+	<script>
+	var token = '{{ csrf_token() }}';
+	</script>
 </head>
 <body>
 	<div class="wrapper">
@@ -13,29 +16,43 @@
 		</header>
 		<div id="work">
 			<ul>
-				<li v-repeat="item: items">
-					<a v-on="click: revealItem($index, $event)" class="item-link" href="@{{item.link}}">
-						<article class="item">
-							<p>
-								@{{item.date}} | <span class="source">@{{item.source}}</span>
-							</p>
+				<item
+					v-repeat="item: items"
+					track-by="id"
+					parent-show-item="@{{onShowItem}}"
+					inline-template
+					v-transition="expand"
+				>
+					<li>
+						<a
+							v-on="click: showItem($index, $event)"
+							class="item-link"
+							v-class="active: item.active, visited: item.viewed"
+							href="@{{item.link}}"
+						>
+							<article class="item">
+								<p>
+									@{{item.date}} | <span class="source">@{{item.source}}</span>
+								</p>
 
-							<h1>
-								@{{item.title}}
-							</h1>
+								<h1>
+									@{{item.title}}
+								</h1>
 
-							<p v-if="$item.categories" class="type">
-								<i>Categories:</i> @{{item.categories}}
-							</p>
+								<p v-if="$item.categories" class="type">
+									<i>Categories:</i> @{{item.categories}}
+								</p>
 
-						</article>
-					</a>
-				</li>
+								<button v-on="click: deleteItem($event)" class="delete">Delete</button>
+							</article>
+						</a>
+					</li>
+				</item>
 			</ul>
 			<div class="pagination">
-				<a v-on="click: update" v-if="prevPage" href="@{{prevPage}}">Previous page</a>
+				<a v-on="click: changePage" v-if="prevPage" href="@{{prevPage}}">Previous page</a>
 				Showing @{{from}} to @{{to}} of @{{total}}
-				<a v-on="click: update" href="@{{nextPage}}">Next page</a>
+				<a v-on="click: changePage" href="@{{nextPage}}">Next page</a>
 			</div>
 			<div v-if="showing" class="offsite-content">
 				<header>

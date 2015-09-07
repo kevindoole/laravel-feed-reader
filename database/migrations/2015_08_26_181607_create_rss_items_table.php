@@ -20,6 +20,7 @@ class CreateRssItemsTable extends Migration
             $table->string('categories')->nullable();
             $table->datetime('pub_date');
             $table->string('guid');
+            $table->boolean('viewed');
         });
     }
 

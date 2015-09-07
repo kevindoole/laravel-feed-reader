@@ -29,6 +29,8 @@ class RssItem extends Model
                 'title' => $item->title,
                 'categories' => $item->categories,
                 'link' => $item->link,
+                'id' => $item->id,
+                'viewed' => $item->viewed,
             ];
         }
 

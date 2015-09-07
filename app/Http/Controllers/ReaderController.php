@@ -25,4 +25,20 @@ class ReaderController extends Controller
 
         return json_encode($data);
     }
+
+    public function deleteItem(Request $request)
+    {
+        $id = $request->get('id');
+
+        RssItem::where('id', $id)->delete();
+
+        return $this->jsonFeed();
+    }
+
+    public function viewedItem(Request $request)
+    {
+        $id = $request->get('id');
+
+        RssItem::where('id', $id)->update(['viewed' => true]);
+    }
 }
