@@ -14,7 +14,7 @@
 		<div id="work">
 			<ul>
 				<li v-repeat="item: items">
-					<a class="item-link" href="@{{item.link}}">
+					<a v-on="click: revealItem($index, $event)" class="item-link" href="@{{item.link}}">
 						<article class="item">
 							<p>
 								@{{item.date}} | <span class="source">@{{item.source}}</span>
@@ -36,6 +36,12 @@
 				<a v-on="click: update" v-if="prevPage" href="@{{prevPage}}">Previous page</a>
 				Showing @{{from}} to @{{to}} of @{{total}}
 				<a v-on="click: update" href="@{{nextPage}}">Next page</a>
+			</div>
+			<div v-if="showing" class="offsite-content">
+				<header>
+					<button v-on="click: showing = false">Back to the thing</button>
+				</header>
+				<iframe v-attr="src: showing" frameborder="0"></iframe>
 			</div>
 		</div>
 	</div>

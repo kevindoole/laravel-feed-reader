@@ -1,4 +1,4 @@
-var item = new Vue({
+var items = new Vue({
     el: '#work',
     data: {
         'items': [],
@@ -6,13 +6,18 @@ var item = new Vue({
         'prevPage': '',
         'from': '',
         'to': '',
-        'total': ''
+        'total': '',
+        'showing': false
     },
     ready: function () {
         var suffix = location.search ? location.search : '';
         this.loadFeeds('/items.json' + suffix);
     },
     methods: {
+        revealItem: function (index, e) {
+            e.preventDefault();
+            this.$set('showing', this.items[index].link);
+        },
         update: function (e) {
             e.preventDefault();
             this.loadFeeds(e.target.href);
